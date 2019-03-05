@@ -1,0 +1,49 @@
+(* Name: John Rowan
+   Class: CSC 345 T,R 11-12:15
+   Description: implement functions preOrder, inOrder
+                ,postOrder, and displayTree for a binary tree  *)
+
+use "testData.sml";
+fun preOrder(empty) = nil
+  | preOrder (bTree(x,y,z)) = [x] @ preOrder(y) @ preOrder(z);
+
+fun inOrder(empty) = nil
+  | inOrder (bTree(x,y,z)) = inOrder(y) @ [x] @ inOrder(z);
+
+fun postOrder(empty) = nil
+  | postOrder (bTree(x,y,z)) = postOrder(y) @ postOrder(z) @ [x];
+
+fun printReal n = print(Real.toString n);
+
+fun printInt n = print(Int.toString n);
+
+fun printX A = print "A"
+  | printX B = print "B"
+  | printX C = print "C"
+  | printX D = print "D"
+  | printX E = print "E"
+  | printX F = print "F"
+  | printX G = print "G"
+  | printX H = print "H";
+
+val indentLevel = 2;
+
+fun tab (0) = print ""
+  | tab (i) = (print "  ";tab (i-1));
+
+fun displaynode(x,y,printfunc) = (tab y;printfunc x;print "\n");
+
+fun dash(x) = (tab x;print "-\n");
+
+fun displaytreeindent(empty,x,prinfun) = print ""
+  | displaytreeindent (bTree(data,empty,empty),x,prinfun) = displaynode(data,x,prinfun) 
+  | displaytreeindent (bTree(data,empty,right),x,prinfun) =
+    (displaynode(data,x,prinfun);dash(x+1);displaytreeindent(right,x+1,prinfun))
+  | displaytreeindent (bTree(data,left,empty),x,prinfun) =
+    (displaynode(data,x,prinfun);displaytreeindent(left,x+1,prinfun);dash(x+1))
+  | displaytreeindent(bTree(data,left,right),x,prinfun) =
+    (displaynode(data,x,prinfun);displaytreeindent(left,x+1,prinfun);displaytreeindent(right,x+1,prinfun));
+
+fun displayTree(BT,prinfun) = displaytreeindent(BT,0,prinfun);
+ 
+
